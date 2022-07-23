@@ -27,32 +27,25 @@ app.get("/api/notes", (req, res) => {
 app.post("/api/notes", (req, res) => {
   const { title, text } = req.body;
 
-  // check note info for empty data
+  // check note info for empty data 
   if (title != "" && text != "") {
+
     const newNote = {
       title,
       text,
     };
+    
+    db.push((newNote));
+    const noteString = JSON.stringify(db, null, '\t');
 
-    fs.readFile("./db/db.json", "utf8", (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const parsedNotes = JSON.parse(data);
-
-        parsedNotes.push(newNote);
-
-        fs.writeFile(
-          "./db/db.json",
-          JSON.stringify(parsedNotes, null, 4),
-          (writeErr) =>
-            writeErr
-              ? console.error(writeErr)
-              : console.info("Successfully updated reviews!")
-        );
-      }
-    });
+    // Write string to file
+    fs.writeFile(`./db/db.json`, noteString, (err) => 
+        err 
+            ? console.error(err)
+            : console.log(`${newNote.title} as been written to JSON file`))
   }
+  res.json(db);
+  
 });
 
 // Delete a note from notes page
