@@ -6,6 +6,7 @@ const path = require("path");
 const db = require("./db/db.json");
 app.use(express.json());
 app.use(express.static("public"));
+const uuid = require('./helpers/uuid');
 
 // Root page
 app.get("/", (req, res) => {
@@ -31,6 +32,7 @@ app.post("/api/notes", (req, res) => {
   if (title != "" && text != "") {
 
     const newNote = {
+      id: uuid(),
       title,
       text,
     };
@@ -47,6 +49,10 @@ app.post("/api/notes", (req, res) => {
   res.json(db);
   
 });
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
+})
 
 // Delete a note from notes page
 app.delete("/api/notes/:id", (req, res) => res);
