@@ -50,13 +50,25 @@ app.post("/api/notes", (req, res) => {
   
 });
 
+// Delete a note from notes page
+app.delete("/api/notes/:id", async (req, res) => {
+
+  // Get id param from clientside js on button click
+  const newArray = db.filter((note) => note.id !== req.params.id)
+
+  // Write new change to db
+  fs.writeFile(`./db/db.json`, JSON.stringify(newArray, null, '\t'), (err) => 
+        err 
+            ? console.error(err)
+            : console.log(`written to JSON file`)
+  )
+});
+  
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 })
-
-// Delete a note from notes page
-app.delete("/api/notes/:id", (req, res) => res);
-
+  
 // Server starts listening on a port
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT} http://localhost:${PORT}/`);
