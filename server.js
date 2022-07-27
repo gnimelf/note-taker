@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
-const PORT = 3001;
+const PORT = process.env.port || 3001;
 const path = require("path");
 const db = require("./db/db.json");
 app.use(express.json());
@@ -57,7 +57,7 @@ app.get("*", (req, res) => {
 // Delete a note from notes page
 app.delete("/api/notes/:id", (req, res) => res);
 
-// Server starts listening on a port and the long
+// Server starts listening on a port
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT} http://localhost:${PORT}/`);
 });
