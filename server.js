@@ -3,7 +3,7 @@ const app = express();
 const fs = require("fs");
 const PORT = process.env.PORT || 3001;
 const path = require("path");
-const db = require("./db/db.json");
+let db = require("./db/db.json");
 app.use(express.json());
 app.use(express.static("public"));
 const uuid = require('./helpers/uuid');
@@ -54,14 +54,16 @@ app.post("/api/notes", (req, res) => {
 app.delete("/api/notes/:id", async (req, res) => {
 
   // Get id param from clientside js on button click
-  const newArray = db.filter((note) => note.id !== req.params.id)
+  db = db.filter((note) => note.id !== req.params.id);
 
   // Write new change to db
-  fs.writeFile(`./db/db.json`, JSON.stringify(newArray, null, '\t'), (err) => 
+  fs.writeFile(`./db/db.json`, JSON.stringify(db, null, '\t'), (err) => 
         err 
             ? console.error(err)
             : console.log(`written to JSON file`)
+           
   )
+   res.json(db);
 });
   
 
