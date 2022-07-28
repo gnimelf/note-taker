@@ -56,4 +56,5 @@ Its nice to have place jot down thoughts and keep track of tasks that need compl
 
 ## Badges
 
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
+![note-taker](https://img.shields.io/github/languages/top/gnimelf/note-taker)
+![langages](https://img.shields.io/github/languages/count/gnimelf/note-taker)
